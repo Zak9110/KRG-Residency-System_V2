@@ -3,10 +3,17 @@
 > **Government-Grade Digital Immigration Management Platform**  
 > Complete end-to-end solution for electronic visa applications, officer workflows, supervisor management, and director analytics for the Kurdistan Region of Iraq.
 
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)]()
-[![Progress](https://img.shields.io/badge/Feature%20Complete-100%25-success)]()
-[![Tests](https://img.shields.io/badge/Tests-Passing-success)]()
-[![Stack](https://img.shields.io/badge/Stack-PNPM%20Monorepo-purple)]()
+[![GitHub Stars](https://img.shields.io/github/stars/Zak9110/KRG-Residency-System_V2?style=social)](https://github.com/Zak9110/KRG-Residency-System_V2)
+[![GitHub Forks](https://img.shields.io/github/forks/Zak9110/KRG-Residency-System_V2?style=social)](https://github.com/Zak9110/KRG-Residency-System_V2/fork)
+
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)](https://github.com/Zak9110/KRG-Residency-System_V2)
+[![Progress](https://img.shields.io/badge/Feature%20Complete-100%25-success)](https://github.com/Zak9110/KRG-Residency-System_V2)
+[![Tests](https://img.shields.io/badge/Tests-Passing-success)](https://github.com/Zak9110/KRG-Residency-System_V2)
+[![Stack](https://img.shields.io/badge/Stack-PNPM%20Monorepo-purple)](https://pnpm.io)
+[![License](https://img.shields.io/github/license/Zak9110/KRG-Residency-System_V2)](https://github.com/Zak9110/KRG-Residency-System_V2/blob/main/LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://typescriptlang.org)
+[![Prisma](https://img.shields.io/badge/Prisma-6-2D3748)](https://prisma.io)
 
 ---
 
