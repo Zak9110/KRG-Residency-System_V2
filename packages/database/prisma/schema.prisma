@@ -1,0 +1,286 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ===================================================================
+// ENUMS (Using String for SQLite compatibility)
+// ===================================================================
+// ApplicationStatus: SUBMITTED, UNDER_REVIEW, APPROVED, REJECTED, 
+//                    PENDING_DOCUMENTS, ACTIVE, EXPIRED, OVERSTAYED, EXITED
+// Role: OFFICER, SUPERVISOR, DIRECTOR, ADMIN, CHECKPOINT_OFFICER
+// PriorityLevel: LOW, NORMAL, HIGH, URGENT
+// LogType: ENTRY, EXIT
+// FlagType: OVERSTAY, FRAUD, SECURITY_CONCERN, DUPLICATE
+// RenewalStatus: PENDING, APPROVED, REJECTED
+// AppealStatus: PENDING, APPROVED, REJECTED, UNDER_REVIEW
+
+// ===================================================================
+// MODELS
+// ===================================================================
+
+model User {
+  id                String   @id @default(uuid())
+  email             String   @unique
+  passwordHash      String
+  fullName          String
+  role              String
+  isActive          Boolean  @default(true)
+  lastLogin         DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations
+  assignedApplications Application[] @relation("AssignedOfficer")
+  approvedApplications Application[] @relation("ApprovedBy")
+  rejectedApplications Application[] @relation("RejectedBy")
+  entryExitLogs       EntryExitLog[]
+  auditLogs           AuditLog[]
+  
+  @@map("users")
+}
+
+model Application {
+  id                    String             @id @default(uuid())
+  referenceNumber       String             @unique
+  
+  // Visitor Information
+  fullName              String
+  nationalId            String
+  phoneNumber           String
+  phoneVerified         Boolean            @default(false)
+  email                 String?
+  dateOfBirth           DateTime
+  nationality           String             @default("Iraq")
+  
+  // Visit Details
+  originGovernorate     String
+  destinationGovernorate String
+  visitPurpose          String
+  visitStartDate        DateTime
+  visitEndDate          DateTime
+  declaredAccommodation String?
+  
+  // Processing
+  status                String             @default("SUBMITTED")
+  assignedOfficerId     String?
+  assignedOfficer       User?              @relation("AssignedOfficer", fields: [assignedOfficerId], references: [id])
+  priorityLevel         String             @default("NORMAL")
+  processingDeadline    DateTime?          // SLA tracking (72 hours from submission)
+  
+  // Security
+  securityRiskScore     Int                @default(0) // 0-100
+  securityFlags         String?            // JSON array of flags
+  isDuplicate           Boolean            @default(false)
+  duplicateOfId         String?            // Link to original if duplicate
+  
+  // Renewal/Emergency tracking
+  isRenewal             Boolean            @default(false)
+  isEmergency           Boolean            @default(false)
+  originalApplicationId String?            // For renewals
+  temporaryPermit       Boolean            @default(false) // Emergency 7-day permits
+  
+  // Decisions
+  approvalDate          DateTime?
+  approvedById          String?
+  approvedBy            User?              @relation("ApprovedBy", fields: [approvedById], references: [id])
+  approvalNotes         String?
+  
+  rejectionDate         DateTime?
+  rejectedById          String?
+  rejectedBy            User?              @relation("RejectedBy", fields: [rejectedById], references: [id])
+  rejectionReason       String?
+  rejectionNotes        String?
+  
+  // Entry/Exit
+  entryTimestamp        DateTime?
+  exitTimestamp         DateTime?
+  qrCode                String?            @unique
+  qrCodeSignature       String?
+  permitExpiryDate      DateTime?
+  overstayDays          Int                @default(0)
+  
+  // Metadata
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  submittedFromIp       String?
+  language              String             @default("ar") // ar, en, ku
+  
+  // Relations
+  documents             Document[]
+  entryExitLogs         EntryExitLog[]
+  auditLogs             AuditLog[]
+  renewals              RenewalApplication[]
+  appeals               Appeal[]
+  
+  @@index([status])
+  @@index([referenceNumber])
+  @@index([nationalId])
+  @@index([assignedOfficerId])
+  @@index([phoneNumber])
+  @@index([createdAt])
+  @@index([processingDeadline])
+  @@index([permitExpiryDate])
+  @@map("applications")
+}
+
+model Document {
+  id             String       @id @default(uuid())
+  applicationId  String
+  application    Application  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  
+  documentType   String       // NATIONAL_ID, PASSPORT, SUPPORTING_DOC, VISITOR_PHOTO
+  fileUrl        String
+  fileName       String
+  fileSize       Int
+  mimeType       String
+  
+  // Verification
+  isVerified     Boolean      @default(false)
+  verificationNotes String?
+  
+  uploadedAt     DateTime     @default(now())
+  
+  @@index([applicationId])
+  @@index([documentType])
+  @@map("documents")
+}
+
+model EntryExitLog {
+  id                  String      @id @default(uuid())
+  applicationId       String
+  application         Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  
+  logType             String      // ENTRY or EXIT
+  checkpointName      String
+  checkpointLocation  String?     // GPS coordinates or checkpoint ID
+  
+  officerId           String?
+  officer             User?       @relation(fields: [officerId], references: [id])
+  
+  // Additional capture data
+  visitorPhotoUrl     String?
+  vehiclePlateNumber  String?
+  
+  recordedAt          DateTime    @default(now())
+  notes               String?
+  
+  @@index([applicationId])
+  @@index([logType])
+  @@index([checkpointName])
+  @@index([recordedAt])
+  @@map("entry_exit_logs")
+}
+
+model AuditLog {
+  id             String      @id @default(uuid())
+  userId         String
+  user           User        @relation(fields: [userId], references: [id])
+  
+  applicationId  String?
+  application    Application? @relation(fields: [applicationId], references: [id])
+  
+  action         String
+  details        String?
+  ipAddress      String?
+  
+  timestamp      DateTime    @default(now())
+  
+  @@index([userId])
+  @@index([applicationId])
+  @@index([timestamp])
+  @@map("audit_logs")
+}
+
+model InternalWatchlist {
+  id          String    @id @default(uuid())
+  nationalId  String
+  fullName    String
+  reason      String
+  flagType    String    // OVERSTAY, FRAUD, SECURITY_CONCERN, DUPLICATE
+  severity    String    @default("MEDIUM") // LOW, MEDIUM, HIGH, CRITICAL
+  isActive    Boolean   @default(true)
+  expiresAt   DateTime?
+  createdBy   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([nationalId])
+  @@index([isActive])
+  @@index([flagType])
+  @@map("internal_watchlist")
+}
+
+model OtpVerification {
+  id            String    @id @default(uuid())
+  phoneNumber   String
+  otpCode       String    // Hashed OTP
+  purpose       String    // APPLICATION, RENEWAL, APPEAL
+  applicationId String?
+  verified      Boolean   @default(false)
+  expiresAt     DateTime
+  createdAt     DateTime  @default(now())
+  attempts      Int       @default(0)
+  
+  @@index([phoneNumber])
+  @@index([expiresAt])
+  @@map("otp_verifications")
+}
+
+model RenewalApplication {
+  id                    String      @id @default(uuid())
+  originalApplicationId String
+  originalApplication   Application @relation(fields: [originalApplicationId], references: [id], onDelete: Cascade)
+  
+  renewalType           String      // STANDARD, EMERGENCY, OVERSTAY
+  newVisitEndDate       DateTime
+  justification         String?
+  
+  status                String      @default("PENDING") // PENDING, APPROVED, REJECTED
+  
+  approvedById          String?
+  approvedAt            DateTime?
+  approvalNotes         String?
+  
+  rejectedById          String?
+  rejectedAt            DateTime?
+  rejectionReason       String?
+  
+  penaltyAmount         Int         @default(0) // In IQD
+  
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  
+  @@index([originalApplicationId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("renewal_applications")
+}
+
+model Appeal {
+  id                  String      @id @default(uuid())
+  applicationId       String
+  application         Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  
+  appealReason        String
+  additionalDocuments String?     // JSON array of document URLs
+  
+  status              String      @default("PENDING") // PENDING, UNDER_REVIEW, APPROVED, REJECTED
+  
+  reviewedBySupervisorId String?
+  reviewedAt          DateTime?
+  reviewNotes         String?
+  decision            String?     // OVERTURN, UPHOLD
+  
+  submittedAt         DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  
+  @@index([applicationId])
+  @@index([status])
+  @@index([submittedAt])
+  @@map("appeals")
+}

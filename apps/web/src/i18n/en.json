@@ -1,0 +1,267 @@
+{
+  "common": {
+    "welcome": "Welcome to Kurdistan Region Government",
+    "languageToggle": "العربية",
+    "loading": "Loading...",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "download": "Download",
+    "upload": "Upload"
+  },
+  "home": {
+    "title": "KRG e-Visit Permit System",
+    "subtitle": "Digital permit application and management system for Kurdistan Region",
+    "applyCard": {
+      "title": "Apply for Permit",
+      "description": "Submit a new e-Visit permit application with phone verification",
+      "action": "Start Application 📝"
+    },
+    "trackCard": {
+      "title": "Track Status",
+      "description": "Check your application status using reference number",
+      "action": "Track Now 🔍"
+    },
+    "checkpointCard": {
+      "title": "Checkpoint Scanner",
+      "description": "Scan QR codes to verify permits at entry points",
+      "action": "Open Scanner 📷"
+    },
+    "supervisorCard": {
+      "title": "Supervisor Panel",
+      "description": "Manage all applications, reassign officers, override decisions",
+      "action": "Open Dashboard 👨‍💼"
+    },
+    "directorCard": {
+      "title": "Director Analytics",
+      "description": "Charts, performance metrics, CSV export, real-time insights",
+      "action": "View Analytics 📊"
+    },
+    "loginCard": {
+      "title": "Staff Login",
+      "description": "Access officer, supervisor, or director dashboard",
+      "action": "Sign In 🔐"
+    }
+  },
+  "apply": {
+    "title": "Apply for e-Visit Permit",
+    "step1": "Phone Verification",
+    "step2": "Enter OTP Code",
+    "step3": "Application Details",
+    "step4": "Success",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "+964xxxxxxxxx",
+    "sendOTP": "Send OTP Code",
+    "otpLabel": "Enter 6-digit code",
+    "verify": "Verify Code",
+    "resend": "Resend Code",
+    "fullName": "Full Name",
+    "nationalId": "National ID Number",
+    "email": "Email (Optional)",
+    "dateOfBirth": "Date of Birth",
+    "nationality": "Nationality",
+    "originGovernorate": "Origin Governorate",
+    "destinationGovernorate": "Destination in KRG",
+    "visitPurpose": "Purpose of Visit",
+    "visitDates": "Visit Duration",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "accommodation": "Declared Accommodation",
+    "documents": "Upload Documents",
+    "nationalIdFile": "National ID (Required)",
+    "passportFile": "Passport (Optional)",
+    "submitApplication": "Submit Application",
+    "successMessage": "Application submitted successfully!",
+    "referenceNumber": "Your reference number",
+    "purposes": {
+      "TOURISM": "Tourism",
+      "BUSINESS": "Business",
+      "FAMILY_VISIT": "Family Visit",
+      "MEDICAL": "Medical",
+      "EDUCATION": "Education",
+      "OTHER": "Other"
+    }
+  },
+  "track": {
+    "title": "Track Application Status",
+    "description": "Enter your reference number to check application status",
+    "referenceLabel": "Reference Number",
+    "referencePlaceholder": "KRG-XXXXXXXX",
+    "checkStatus": "Check Status",
+    "loading": "Searching...",
+    "notFound": "Application not found",
+    "applicationDetails": "Application Details",
+    "referenceNumber": "Reference Number",
+    "fullName": "Full Name",
+    "visitPurpose": "Visit Purpose",
+    "submittedDate": "Submitted Date",
+    "statusLabels": {
+      "DRAFT": "Draft",
+      "SUBMITTED": "Submitted",
+      "UNDER_REVIEW": "Under Review",
+      "PENDING_DOCUMENTS": "Documents Requested",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "PERMIT_ISSUED": "Permit Issued",
+      "ACTIVE": "Active",
+      "EXPIRED": "Expired",
+      "EXITED": "Exited"
+    }
+  },
+  "checkpoint": {
+    "title": "Checkpoint QR Scanner",
+    "scanQR": "Scan QR Code",
+    "manualEntry": "Or Enter Manually",
+    "applicationId": "Application ID",
+    "checkpointLocation": "Checkpoint Location",
+    "verify": "Verify Permit",
+    "httpsWarning": "Camera requires HTTPS. Use manual entry on localhost.",
+    "checkpoints": {
+      "Erbil_Airport": "Erbil International Airport",
+      "Sulaymaniyah_Airport": "Sulaymaniyah International Airport",
+      "Ibrahim_Khalil": "Ibrahim Khalil Border",
+      "Bashmakh": "Bashmakh Border",
+      "Haji_Omaran": "Haji Omaran Border"
+    }
+  },
+  "login": {
+    "title": "Kurdistan e-Visit",
+    "subtitle": "Staff Login Portal",
+    "email": "Email Address",
+    "password": "Password",
+    "signin": "Sign In",
+    "loading": "Signing in...",
+    "testCredentials": "Test Credentials Available",
+    "failed": "Login failed",
+    "connectionError": "Failed to connect to server"
+  },
+  "dashboard": {
+    "officer": {
+      "title": "Officer Dashboard",
+      "myApplications": "My Assigned Applications",
+      "total": "Total Assigned",
+      "pending": "Pending Review",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "reviewApplication": "Review Application",
+      "approve": "Approve",
+      "reject": "Reject",
+      "requestDocuments": "Request Documents"
+    },
+    "supervisor": {
+      "title": "Supervisor Dashboard",
+      "allApplications": "All Applications",
+      "reassign": "Reassign",
+      "override": "Override Decision",
+      "selectOfficer": "Select Officer"
+    },
+    "director": {
+      "title": "Director Analytics Dashboard",
+      "subtitle": "Real-time insights and performance metrics",
+      "summary": "Summary Statistics",
+      "total": "Total Applications",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "pending": "Pending Review",
+      "active": "Active Permits",
+      "approvalRate": "Approval Rate",
+      "avgProcessingTime": "Avg Processing Time",
+      "days": "days",
+      "applicationsOverTime": "Applications Over Time (Last 30 Days)",
+      "statusDistribution": "Status Distribution",
+      "officerPerformance": "Officer Performance",
+      "officerWorkload": "Officer Workload Comparison",
+      "exportCSV": "Export to CSV",
+      "exportPDF": "Export to PDF",
+      "exportExcel": "Export to Excel",
+      "lineChart": "Line Chart",
+      "barChart": "Bar Chart",
+      "officer": "Officer",
+      "assigned": "Assigned",
+      "approvalRateLabel": "Approval Rate",
+      "filtersButton": "Filters",
+      "export": "Export",
+      "refresh": "Refresh",
+      "loading": "Loading analytics...",
+      "navigation": {
+        "overview": "Overview",
+        "demographics": "Demographics",
+        "geographic": "Geographic",
+        "temporal": "Trends",
+        "purposes": "Visit Purposes",
+        "performance": "Performance",
+        "activity": "Recent Activity"
+      },
+      "filters": {
+        "allGovernorates": "All Governorates",
+        "allGenders": "All Genders",
+        "allAges": "All Ages",
+        "allPurposes": "All Purposes",
+        "allDurations": "All Durations",
+        "last7Days": "Last 7 days",
+        "last30Days": "Last 30 days",
+        "last90Days": "Last 90 days",
+        "thisMonth": "This month",
+        "customRange": "Custom range",
+        "male": "Male",
+        "female": "Female"
+      },
+      "demographics": {
+        "title": "Demographics Analytics",
+        "genderDistribution": "Gender Distribution",
+        "ageDistribution": "Age Distribution",
+        "topNationalities": "Top Nationalities",
+        "country": "Country",
+        "applications": "Applications",
+        "percentage": "Percentage",
+        "distribution": "Distribution"
+      },
+      "geographic": {
+        "title": "Geographic Analytics",
+        "topOriginGovernorates": "Top Origin Governorates"
+      },
+      "temporal": {
+        "title": "Application Trends",
+        "days90": "90 Days"
+      },
+      "purposes": {
+        "title": "Visit Purpose Analytics",
+        "distribution": "Visit Purpose Distribution",
+        "breakdown": "Purpose Breakdown",
+        "tourism": "Tourism",
+        "business": "Business",
+        "family": "Family",
+        "medical": "Medical",
+        "education": "Education",
+        "other": "Other"
+      },
+      "performance": {
+        "title": "Officer Performance Metrics",
+        "efficiency": "Efficiency",
+        "workloadDistribution": "Workload Distribution"
+      },
+      "activity": {
+        "title": "Recent Activity Feed",
+        "applicant": "Applicant",
+        "action": "Action",
+        "officer": "Officer",
+        "timestamp": "Time"
+      },
+      "stats": {
+        "last30Days": "Last 30 Days",
+        "processing": "Processing",
+        "current": "Current",
+        "topOfficers": "Top Officers",
+        "efficiency": "Efficiency"
+      }
+    }
+  }
+}

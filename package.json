@@ -1,0 +1,24 @@
+{
+  "name": "krg-evisit-system",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter @krg-evisit/api dev\" \"pnpm --filter @krg-evisit/web dev\"",
+    "dev:api": "pnpm --filter @krg-evisit/api dev",
+    "dev:web": "pnpm --filter @krg-evisit/web dev",
+    "build": "pnpm -r build",
+    "db:generate": "pnpm --filter @krg-evisit/database prisma:generate",
+    "db:push": "pnpm --filter @krg-evisit/database prisma:push",
+    "db:studio": "pnpm --filter @krg-evisit/database prisma:studio",
+    "db:seed": "pnpm --filter @krg-evisit/database seed"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "prettier": "^3.3.0",
+    "concurrently": "^8.2.2"
+  }
+}

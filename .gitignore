@@ -1,0 +1,17 @@
+node_modules
+.next
+.env
+.env.local
+.env.production
+dist
+build
+*.log
+.DS_Store
+.vercel
+.railway
+prisma/migrations
+coverage
+.turbo
+.cache
+uploads/*
+!uploads/.gitkeep
